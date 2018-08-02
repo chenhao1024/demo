@@ -4,4 +4,7 @@
 ### canvas1
 HTML5 canvas开发详解（第二版）第一个例子。
 ***
+### canvas2
+HTML5 canvas开发详解（第二版）猜字母游戏。
+***
 
