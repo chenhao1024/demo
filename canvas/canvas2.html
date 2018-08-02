@@ -10,11 +10,17 @@
 
 <body>
   <canvas id="canvasOne" width="500" height="300">Your browser does not support HTML5 Canvas.</canvas>
+  <form action="">
+    <input type="button" id="createImageData" value="Export Canvas Image">
+  </form>
+  <img id="imgData" src="">
 </body>
 <script>
   window.onload = canvasApp;
 
   function canvasApp() {
+    var formElement=document.getElementById("createImageData");
+    formElement.addEventListener('click',createImageDataPressed,false);
     var guesses, message, letters, today, letterToGuess, higherOrLower, lettersGuessed, gameOver;
     guesses = 0;
     message = "Guess The Letter From a (lower) to z (higher)";
@@ -25,8 +31,8 @@
     letterToGuess = "";
     higherOrLower = "";
     gameOver = false;
+    var theCanvas = document.getElementById('canvasOne');
     function drawScreen() {
-      var theCanvas = document.getElementById('canvasOne');
       if (!theCanvas || !theCanvas.getContext) {
         return;
       }
@@ -91,6 +97,16 @@
       window.addEventListener("keydown", eventKeyPressed, true);
       drawScreen();
     }
+
+    function createImageDataPressed(e){
+      /* window.open(theCanvas.toDataURL(),"canvasImage","left=0,top=0,width="+theCanvas.width+
+      // ",height="+theCanvas.height+",toolbar=0,resizable=0");
+      // 以上代码打开的窗口没有显示截图，报Not allowed to navigate top frame to data URL错误
+      // 为了看到截图效果，用img展示之
+      */ 
+      document.getElementById("imgData").src=theCanvas.toDataURL();
+    }
+
     initGame();
 
   }
