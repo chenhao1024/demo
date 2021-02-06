@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+</head>
+<style>
+.wrap {
+  margin: 20px 30px;
+}
+.wrap label {
+  width: 100px;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: top;
+}
+.wrap div {
+  margin-bottom: 10px;
+}
+#submit {
+  color: #FFFFFF;
+  background-color: #4CAF50;
+  padding: 4px 6px;
+  border: none;
+  border-radius: 4px;
+  width: 60px;
+  text-align: center;
+  cursor: pointer;
+}
+</style>
+<body>
+  <div class="wrap">
+    <div>
+      <label for="numbers">接收号码:</label>
+      <textarea id="numbers" name="numbers" placeholder="请输入短信接收号码，多个号码以英文逗号隔开" rows="5" cols="33"></textarea>
+    </div>
+    <div>
+      <label for="content">短信内容:</label>
+      <textarea id="content" name="content" placeholder="请输入短信内容" rows="5" cols="33"></textarea>
+    </div>
+    <div>
+      <label for="account">API认证名:</label>
+      <input id="account" name="account" placeholder="请输入API认证名" />
+    </div>
+    <div>
+      <label for="pwd">API认证密钥:</label>
+      <input id="pwd" name="pwd" placeholder="请输入API认证密钥" />
+    </div>
+    <div>
+      <button id="submit">提交</button>
+    </div>
+  </div>
+</body>
+<script>
+  document.getElementById('submit').onclick=function(){
+  
+var postData = {
+    "numbers": document.getElementById('numbers').value,
+    "content": document.getElementById('content').value,
+    "account": document.getElementById('account').value,
+    "pwd": document.getElementById('pwd').value,
+  };
+ console.log(postData)
+postData = (function(obj){ // 转成post需要的字符串.
+    var str = "";
+ 
+    for(var prop in obj){
+        str += prop + "=" + obj[prop] + "&"
+    }
+    return str;
+})(postData);
+ 
+var xhr = new XMLHttpRequest();
+ 
+xhr.open("POST", "/sms/batchsendsms", true);
+xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xhr.onreadystatechange = function(){
+    var XMLHttpReq = xhr;
+    if (XMLHttpReq.readyState == 4) {
+        if (XMLHttpReq.status == 200) {
+            var text = XMLHttpReq.responseText;
+ 
+            console.log(text);
+        }
+    }
+};
+xhr.send(postData);
+}
+</script>
+</html>
